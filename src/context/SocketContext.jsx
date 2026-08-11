@@ -8,7 +8,8 @@ export const SocketProvider = ({ children }) => {
   const [realtimeAlert, setRealtimeAlert] = useState(null);
 
   useEffect(() => {
-    const newSocket = io('/', { path: '/socket.io' });
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL?.replace('/api', '') || '/';
+    const newSocket = io(socketUrl, { path: '/socket.io' });
     setSocket(newSocket);
 
     newSocket.on('stock_alert', (data) => {
