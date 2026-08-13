@@ -87,7 +87,7 @@ const AiOptimizationPage = () => {
         <div className="row g-3">
           {aiData?.insights?.map((item) => (
             <div key={item.id} className="col-md-4">
-              <div className="p-3 rounded-3 border border-secondary h-100 d-flex flex-column justify-content-between" style={{ background: 'rgba(15, 23, 42, 0.6)' }}>
+              <div className="glass-card p-3 h-100 d-flex flex-column justify-content-between">
                 <div>
                   <div className="d-flex justify-content-between align-items-center mb-2">
                     <span className="badge bg-primary font-mono">{item.type}</span>
@@ -164,7 +164,7 @@ const AiOptimizationPage = () => {
         <div className="row g-3">
           {aiData?.supplierPredictions?.map((sup) => (
             <div key={sup.id} className="col-md-6 col-lg-4">
-              <div className="p-3 rounded-3 border border-secondary" style={{ background: 'rgba(15, 23, 42, 0.6)' }}>
+              <div className="glass-card p-3">
                 <div className="d-flex justify-content-between align-items-center mb-2">
                   <h6 className="fw-bold text-light mb-0">{sup.name}</h6>
                   <span className="badge bg-success font-mono">{sup.aiStatus}</span>

@@ -174,7 +174,7 @@ const DashboardPage = () => {
               </div>
 
               {data?.ai?.insights?.map((insight, idx) => (
-                <div key={idx} className="p-3 mb-3 rounded-3 border border-secondary" style={{ background: 'rgba(15, 23, 42, 0.6)' }}>
+                <div key={idx} className="glass-card p-3 mb-3">
                   <div className="d-flex justify-content-between align-items-center mb-1">
                     <span className="fw-bold text-info small">{insight.title}</span>
                     <span className="badge-ai-confidence">{insight.confidence}% Confidence</span>
