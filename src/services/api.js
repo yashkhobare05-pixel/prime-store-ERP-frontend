@@ -1,7 +1,14 @@
 import axios from 'axios';
 
 const getBaseURL = () => {
-  let url = import.meta.env.VITE_API_URL || '/api';
+  let url = import.meta.env.VITE_API_URL;
+  if (!url || url === '/api') {
+    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      url = 'https://prime-store-erp-backend.onrender.com/api';
+    } else {
+      url = '/api';
+    }
+  }
   if (url.endsWith('/')) {
     url = url.slice(0, -1);
   }

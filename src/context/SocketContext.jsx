@@ -8,7 +8,14 @@ export const SocketProvider = ({ children }) => {
   const [realtimeAlert, setRealtimeAlert] = useState(null);
 
   useEffect(() => {
-    const socketUrl = import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL?.replace('/api', '') || '/';
+    let socketUrl = import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL?.replace('/api', '');
+    if (!socketUrl) {
+      if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        socketUrl = 'https://prime-store-erp-backend.onrender.com';
+      } else {
+        socketUrl = '/';
+      }
+    }
     const newSocket = io(socketUrl, { path: '/socket.io' });
     setSocket(newSocket);
 
