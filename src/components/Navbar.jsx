@@ -51,11 +51,11 @@ const Navbar = ({ onSearch }) => {
           <Search className="position-absolute start-0 ms-3 text-secondary" size={18} />
           <input
             type="text"
-            className="form-control bg-dark text-light border-secondary ps-5 pe-5 rounded-pill shadow-none"
+            className="form-control text-light ps-5 pe-5 rounded-pill shadow-none"
             placeholder="Global Search (Products, SKUs, Barcodes, Suppliers...)"
             value={searchTerm}
             onChange={handleSearchChange}
-            style={{ fontSize: '0.9rem', height: '42px', backgroundColor: 'rgba(15, 23, 42, 0.6)' }}
+            style={{ fontSize: '0.9rem', height: '42px' }}
           />
           <button 
             type="button"
@@ -101,7 +101,7 @@ const Navbar = ({ onSearch }) => {
           {/* User Profile Dropdown */}
           <div className="dropdown">
             <button 
-              className="btn btn-dark d-flex align-items-center gap-2 border-secondary rounded-pill px-3 py-1"
+              className="btn btn-outline-secondary d-flex align-items-center gap-2 rounded-pill px-3 py-1"
               type="button" 
               data-bs-toggle="dropdown"
             >
@@ -116,7 +116,7 @@ const Navbar = ({ onSearch }) => {
                 <div className="text-secondary small font-mono" style={{ fontSize: '0.7rem' }}>{user?.role || 'Admin'}</div>
               </div>
             </button>
-            <ul className="dropdown-menu dropdown-menu-end dropdown-menu-dark glass-card p-2">
+            <ul className="dropdown-menu dropdown-menu-end glass-card p-2">
               <li>
                 <button className="dropdown-item d-flex align-items-center gap-2 rounded text-light" onClick={() => navigate('/settings')}>
                   <UserIcon size={16} /> Profile & Settings

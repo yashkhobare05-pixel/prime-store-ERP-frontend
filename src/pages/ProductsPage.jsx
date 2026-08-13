@@ -136,7 +136,7 @@ const ProductsPage = () => {
           <Search size={16} className="position-absolute start-0 ms-3 text-secondary" />
           <input
             type="text"
-            className="form-control bg-dark text-light border-secondary ps-5 rounded-pill"
+            className="form-control text-light border-secondary ps-5 rounded-pill"
             placeholder="Search by Product Name, SKU, Barcode..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -145,7 +145,7 @@ const ProductsPage = () => {
 
         <div className="d-flex gap-2">
           <select 
-            className="form-select bg-dark text-light border-secondary rounded-pill"
+            className="form-select text-light border-secondary rounded-pill"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
@@ -154,7 +154,7 @@ const ProductsPage = () => {
           </select>
 
           <select 
-            className="form-select bg-dark text-light border-secondary rounded-pill"
+            className="form-select text-light border-secondary rounded-pill"
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
           >
@@ -267,7 +267,7 @@ const ProductsPage = () => {
                     <label className="form-label small text-secondary">Product Name</label>
                     <input 
                       type="text" 
-                      className="form-control bg-dark text-light border-secondary"
+                      className="form-control text-light border-secondary"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required 
@@ -278,7 +278,7 @@ const ProductsPage = () => {
                     <label className="form-label small text-secondary">SKU Code</label>
                     <input 
                       type="text" 
-                      className="form-control bg-dark text-light border-secondary font-mono"
+                      className="form-control text-light border-secondary font-mono"
                       value={formData.sku}
                       onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
                       placeholder="e.g. HPP-16-ULTRA"
@@ -290,7 +290,7 @@ const ProductsPage = () => {
                     <label className="form-label small text-secondary">Cost Price ($)</label>
                     <input 
                       type="number" 
-                      className="form-control bg-dark text-light border-secondary font-mono"
+                      className="form-control text-light border-secondary font-mono"
                       value={formData.costPrice}
                       onChange={(e) => setFormData({ ...formData, costPrice: e.target.value })}
                       required 
@@ -301,7 +301,7 @@ const ProductsPage = () => {
                     <label className="form-label small text-secondary">Selling Price ($)</label>
                     <input 
                       type="number" 
-                      className="form-control bg-dark text-light border-secondary font-mono"
+                      className="form-control text-light border-secondary font-mono"
                       value={formData.sellingPrice}
                       onChange={(e) => setFormData({ ...formData, sellingPrice: e.target.value })}
                       required 
@@ -312,7 +312,7 @@ const ProductsPage = () => {
                     <label className="form-label small text-secondary">Initial Stock Quantity</label>
                     <input 
                       type="number" 
-                      className="form-control bg-dark text-light border-secondary font-mono"
+                      className="form-control text-light border-secondary font-mono"
                       value={formData.stockQuantity}
                       onChange={(e) => setFormData({ ...formData, stockQuantity: e.target.value })}
                       required 
@@ -322,7 +322,7 @@ const ProductsPage = () => {
                   <div className="col-md-4">
                     <label className="form-label small text-secondary">Category</label>
                     <select 
-                      className="form-select bg-dark text-light border-secondary"
+                      className="form-select text-light border-secondary"
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                       required
@@ -335,7 +335,7 @@ const ProductsPage = () => {
                   <div className="col-md-4">
                     <label className="form-label small text-secondary">Supplier</label>
                     <select 
-                      className="form-select bg-dark text-light border-secondary"
+                      className="form-select text-light border-secondary"
                       value={formData.supplier}
                       onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
                     >
@@ -347,7 +347,7 @@ const ProductsPage = () => {
                   <div className="col-md-4">
                     <label className="form-label small text-secondary">Warehouse Location</label>
                     <select 
-                      className="form-select bg-dark text-light border-secondary"
+                      className="form-select text-light border-secondary"
                       value={formData.warehouse}
                       onChange={(e) => setFormData({ ...formData, warehouse: e.target.value })}
                     >

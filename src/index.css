@@ -53,6 +53,29 @@ body {
   color: #0284C7 !important;
 }
 
+/* Form Inputs Theme Adaptability */
+.form-control, .form-select {
+  background-color: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+[data-theme='light'] .form-control, 
+[data-theme='light'] .form-select {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1px solid #CBD5E1 !important;
+}
+
+[data-theme='light'] .form-select option {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+}
+
+[data-theme='light'] .form-control::placeholder {
+  color: #64748B !important;
+}
+
 /* Glassmorphism & High-Contrast Cards */
 .glass-card {
   background: var(--bg-card) !important;
