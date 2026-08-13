@@ -72,7 +72,7 @@ const SettingsPage = () => {
                 <label className="form-label small text-secondary">Current Password</label>
                 <input 
                   type="password" 
-                  className="form-control bg-dark text-light border-secondary"
+                  className="form-control text-light border-secondary"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   required 
@@ -83,7 +83,7 @@ const SettingsPage = () => {
                 <label className="form-label small text-secondary">New Password</label>
                 <input 
                   type="password" 
-                  className="form-control bg-dark text-light border-secondary"
+                  className="form-control text-light border-secondary"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   required 
