@@ -9,6 +9,7 @@ import {
   Barcode, 
   Trash2, 
   Camera,
+  Sparkles,
   X
 } from 'lucide-react';
 import { toast } from 'react-toastify';
@@ -56,6 +57,22 @@ const ProductsPage = () => {
   const { data: categories = [] } = useQuery({ queryKey: ['categories'], queryFn: fetchCategories });
   const { data: suppliers = [] } = useQuery({ queryKey: ['suppliers'], queryFn: fetchSuppliers });
   const { data: warehouses = [] } = useQuery({ queryKey: ['warehouses'], queryFn: fetchWarehouses });
+
+  // Seed Catalog Mutation
+  const seedCatalogMutation = useMutation({
+    mutationFn: () => API.get('/products/seed'),
+    onSuccess: (res) => {
+      toast.success(res.data.message || 'Sample products catalog loaded successfully!');
+      queryClient.invalidateQueries(['products']);
+      queryClient.invalidateQueries(['categories']);
+      queryClient.invalidateQueries(['suppliers']);
+      queryClient.invalidateQueries(['warehouses']);
+      queryClient.invalidateQueries(['dashboard-data']);
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || 'Failed to seed sample catalog.');
+    }
+  });
 
   // Mutations
   const createProductMutation = useMutation({
@@ -115,6 +132,14 @@ const ProductsPage = () => {
 
         <div className="d-flex gap-2">
           <button 
+            className="btn btn-outline-warning rounded-pill px-3 d-flex align-items-center gap-2"
+            onClick={() => seedCatalogMutation.mutate()}
+            disabled={seedCatalogMutation.isPending}
+          >
+            <Sparkles size={16} /> {seedCatalogMutation.isPending ? 'Seeding...' : 'Load Sample Catalog'}
+          </button>
+
+          <button 
             className="btn btn-outline-info rounded-pill px-3 d-flex align-items-center gap-2"
             onClick={() => setShowScanner(true)}
           >
@@ -168,68 +193,78 @@ const ProductsPage = () => {
 
       {/* Products Table */}
       <div className="glass-card p-4">
-        <div className="table-responsive">
-          <table className="table table-dark table-hover align-middle mb-0">
-            <thead>
-              <tr className="text-secondary font-mono small border-secondary">
-                <th>IMAGE</th>
-                <th>PRODUCT NAME</th>
-                <th>SKU</th>
-                <th>CATEGORY</th>
-                <th>COST / SELL</th>
-                <th>STOCK QTY</th>
-                <th>STATUS</th>
-                <th>BARCODE</th>
-                <th>ACTIONS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((p) => (
-                <tr key={p._id} className="border-secondary">
-                  <td>
-                    <img 
-                      src={p.image || 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=100&q=80'} 
-                      alt={p.name}
-                      className="rounded-3"
-                      style={{ width: '42px', height: '42px', objectFit: 'cover' }}
-                    />
-                  </td>
-                  <td className="fw-bold text-light">{p.name}</td>
-                  <td className="font-mono text-info fw-semibold">{p.sku}</td>
-                  <td className="small text-secondary">{p.category?.name || 'General'}</td>
-                  <td className="font-mono small">
-                    <span className="text-secondary">${p.costPrice}</span> / <span className="text-success fw-bold">${p.sellingPrice}</span>
-                  </td>
-                  <td className="font-mono fw-bold">{p.stockQuantity} {p.unit}</td>
-                  <td>
-                    {p.stockQuantity <= 0 ? (
-                      <span className="badge-out-stock">Out of Stock</span>
-                    ) : p.stockQuantity <= p.minStockLevel ? (
-                      <span className="badge-low-stock">Low Stock</span>
-                    ) : (
-                      <span className="badge-in-stock">In Stock</span>
-                    )}
-                  </td>
-                  <td>
-                    <button 
-                      className="btn btn-sm btn-outline-secondary rounded-pill font-mono d-flex align-items-center gap-1"
-                      onClick={() => setSelectedProductBarcode(p)}
-                    >
-                      <Barcode size={14} /> {p.barcode}
-                    </button>
-                  </td>
-                  <td>
-                    <div className="d-flex gap-2">
-                      <button className="btn btn-sm btn-outline-danger" onClick={() => handleDeleteProduct(p._id)}>
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-                  </td>
+        {products.length === 0 ? (
+          <div className="text-center py-5">
+            <h5 className="fw-bold text-light mb-2">No Products in Catalog</h5>
+            <p className="text-secondary small mb-3">Your database catalog is currently empty. You can add a new product or click below to populate sample products.</p>
+            <button className="btn btn-primary-gradient rounded-pill px-4" onClick={() => seedCatalogMutation.mutate()}>
+              <Sparkles size={16} className="me-2" /> Load 10 Demo Products
+            </button>
+          </div>
+        ) : (
+          <div className="table-responsive">
+            <table className="table table-dark table-hover align-middle mb-0">
+              <thead>
+                <tr className="text-secondary font-mono small border-secondary">
+                  <th>IMAGE</th>
+                  <th>PRODUCT NAME</th>
+                  <th>SKU</th>
+                  <th>CATEGORY</th>
+                  <th>COST / SELL</th>
+                  <th>STOCK QTY</th>
+                  <th>STATUS</th>
+                  <th>BARCODE</th>
+                  <th>ACTIONS</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {products.map((p) => (
+                  <tr key={p._id} className="border-secondary">
+                    <td>
+                      <img 
+                        src={p.image || 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=100&q=80'} 
+                        alt={p.name}
+                        className="rounded-3"
+                        style={{ width: '42px', height: '42px', objectFit: 'cover' }}
+                      />
+                    </td>
+                    <td className="fw-bold text-light">{p.name}</td>
+                    <td className="font-mono text-info fw-semibold">{p.sku}</td>
+                    <td className="small text-secondary">{p.category?.name || 'General'}</td>
+                    <td className="font-mono small">
+                      <span className="text-secondary">${p.costPrice}</span> / <span className="text-success fw-bold">${p.sellingPrice}</span>
+                    </td>
+                    <td className="font-mono fw-bold">{p.stockQuantity} {p.unit}</td>
+                    <td>
+                      {p.stockQuantity <= 0 ? (
+                        <span className="badge-out-stock">Out of Stock</span>
+                      ) : p.stockQuantity <= p.minStockLevel ? (
+                        <span className="badge-low-stock">Low Stock</span>
+                      ) : (
+                        <span className="badge-in-stock">In Stock</span>
+                      )}
+                    </td>
+                    <td>
+                      <button 
+                        className="btn btn-sm btn-outline-secondary rounded-pill font-mono d-flex align-items-center gap-1"
+                        onClick={() => setSelectedProductBarcode(p)}
+                      >
+                        <Barcode size={14} /> {p.barcode}
+                      </button>
+                    </td>
+                    <td>
+                      <div className="d-flex gap-2">
+                        <button className="btn btn-sm btn-outline-danger" onClick={() => handleDeleteProduct(p._id)}>
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
       {/* Barcode Modal */}
